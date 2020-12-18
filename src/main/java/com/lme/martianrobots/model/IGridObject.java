@@ -1,7 +1,10 @@
 package com.lme.martianrobots.model;
 
+import java.util.Map;
+
 public interface IGridObject {
 
-    GridObjectPostion getGridObjectPosition();
-    void setGridObjectPosition(GridObjectPostion position);
+    GridObjectPosition getGridObjectPosition();
+    void setGridObjectPosition(GridObjectPosition position);
+    void executeInstruction(int xBoundary, int yBoundary);
 }
