@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 @RunWith(SpringRunner.class)
@@ -34,14 +33,18 @@ public class GridServiceTest {
         IGridObject robot3 = new Robot(position,"LLFFFLFLFL");
 
         List<IGridObject> gridObjects = new ArrayList<>();
-        //gridObjects.add(robot1);
-        //gridObjects.add(robot2);
+        gridObjects.add(robot1);
+        gridObjects.add(robot2);
         gridObjects.add(robot3);
         gridService.createGridWithRobots(new Coordinates(5,3), gridObjects);
         gridService.getGridObjects();
-        Assert.assertEquals((5*3)+2, gridService.getGrid().size());
+        Assert.assertEquals((6*4), gridService.getGrid().size());
 
         List<IGridObject> result = gridService.getGridObjects();
+
+        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid().equals(robot1.getUuid())).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("3 3 N LOST", result.stream().filter(obj -> obj.getUuid().equals(robot2.getUuid())).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("2 3 S", result.stream().filter(obj -> obj.getUuid().equals(robot3.getUuid())).findAny().get().getGridPosition().toString());
 
     }
 

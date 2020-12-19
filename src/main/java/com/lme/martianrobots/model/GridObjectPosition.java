@@ -51,18 +51,40 @@ public class GridObjectPosition {
         return lastKnownCoordiantes;
     }
 
-    public void move(Coordinates coordinates) {
-
-        if (this.isLost){
-            return;
-        }
+    public Coordinates getNextCoordinates(Coordinates coordinates){
+        Coordinates nxtCoordinates = new Coordinates();
 
         if (this.endCoordinates == null){
             this.endCoordinates = new Coordinates(startCoordinates.getxPosition(), startCoordinates.getyPosition());
         }
 
-        this.lastKnownCoordiantes = new Coordinates(endCoordinates.getxPosition(),endCoordinates.getyPosition());
-        this.endCoordinates.setyPosition(this.endCoordinates.getyPosition() + coordinates.getyPosition());
-        this.endCoordinates.setxPosition(this.endCoordinates.getxPosition() + coordinates.getxPosition());
+        nxtCoordinates.setxPosition(this.endCoordinates.getxPosition() + coordinates.getxPosition());
+        nxtCoordinates.setyPosition(this.endCoordinates.getyPosition() + coordinates.getyPosition());
+
+        return nxtCoordinates;
+    }
+
+    public void move(Coordinates coordinates) {
+
+        if (this.isLost){
+            this.lastKnownCoordiantes = new Coordinates(endCoordinates.getxPosition(),endCoordinates.getyPosition());
+            return;
+        }
+
+        this.endCoordinates.setyPosition(coordinates.getyPosition());
+        this.endCoordinates.setxPosition(coordinates.getxPosition());
+    }
+
+    @Override
+    public String toString() {
+        if (this.startCoordinates == null && this.endCoordinates == null && this.lastKnownCoordiantes == null){
+            return "";
+        }
+
+        if (this.endCoordinates == null && this.lastKnownCoordiantes == null){
+            return String.format("%s %s %s", this.startCoordinates.getxPosition(), this.startCoordinates.getyPosition(), this.orientation);
+        }
+        return this.isLost ? String.format("%s %s %s LOST", this.lastKnownCoordiantes.getxPosition(), this.lastKnownCoordiantes.getyPosition(), this.orientation) :
+                String.format("%s %s %s", this.getEndCoordinates().getxPosition(), this.getEndCoordinates().getyPosition(), this.orientation);
     }
 }

@@ -2,48 +2,49 @@ package com.lme.martianrobots.model;
 
 import com.lme.martianrobots.utility.DirectionMap;
 import java.util.AbstractMap;
+import java.util.List;
+import java.util.UUID;
 
 public class Robot implements IGridObject {
 
     GridObjectPosition gridPosition;
     String instructions;
+    UUID uuid;
+
+    public Robot(){
+        uuid = UUID.randomUUID();
+    }
 
     public Robot(GridObjectPosition position, String instructions){
+
+        this();
         this.gridPosition = position;
         this.instructions = instructions;
     }
 
     @Override
-    public GridObjectPosition getGridObjectPosition() {
+    public GridObjectPosition getGridPosition() {
         return gridPosition;
     }
 
     @Override
-    public void setGridObjectPosition(GridObjectPosition position) {
+    public void setGridPosition(GridObjectPosition position) {
         gridPosition = position;
     }
 
     @Override
-    public void executeInstruction(int xBoundary, int yBoundary) {
-        char[] steps = instructions.toCharArray();
-        for (char step:steps
-        ) {
-            if (gridPosition.getIsLost()) continue;
-            Orientation orientation =  gridPosition.getOrientation();
-            AbstractMap.SimpleEntry<Coordinates,Orientation> translatedStep = DirectionMap.getDirectionMap().get(String.format("%s%s", orientation.toString(),step));
-            gridPosition.move(translatedStep.getKey());
-            gridPosition.setOrientation(translatedStep.getValue());
-
-            if ((gridPosition.getEndCoordinates().getxPosition() > xBoundary
-                    || gridPosition.getEndCoordinates().getyPosition()> yBoundary)
-                    || gridPosition.getEndCoordinates().getyPosition() < 0
-                    || gridPosition.getEndCoordinates().getxPosition() < 0){
-
-                //mark grid object lost
-                gridPosition.setIsLost(true);
-            }
-        }
+    public String getInstructions() {
+        return instructions;
     }
 
+    @Override
+    public void setInstrunctions(String instrunctions) {
+        this.instructions = instrunctions;
+    }
+
+    @Override
+    public UUID getUuid() {
+        return uuid;
+    }
 
 }
