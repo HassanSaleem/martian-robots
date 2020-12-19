@@ -9,8 +9,8 @@ public class GridObjectPosition {
     private Boolean isLost = false;
 
     public GridObjectPosition(){
-
     }
+
     public GridObjectPosition(Coordinates coordinates, Orientation orientation) {
         this.startCoordinates = coordinates;
         this.orientation = orientation;
