@@ -15,7 +15,7 @@ import static java.lang.StrictMath.sqrt;
 @Service
 public class GridService {
 
-    Map<Coordinates, IGridObject> grid = new LinkedHashMap();
+    Map<Coordinates, IGridObject> grid = new HashMap();
 
 
     public void createGridWithRobots(Coordinates upperRightCoordinate, List<IGridObject> gridObjects){
@@ -53,7 +53,6 @@ public class GridService {
 
         }
     }
-
 
     public void executeInstruction(IGridObject gridObject, List<Coordinates> lostObjects, int xBoundary, int yBoundary) {
         char[] steps = gridObject.getInstructions().toCharArray();

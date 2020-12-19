@@ -1,8 +1,4 @@
 package com.lme.martianrobots.model;
-
-import com.lme.martianrobots.utility.DirectionMap;
-import java.util.AbstractMap;
-import java.util.List;
 import java.util.UUID;
 
 public class Robot implements IGridObject {
@@ -38,8 +34,8 @@ public class Robot implements IGridObject {
     }
 
     @Override
-    public void setInstrunctions(String instrunctions) {
-        this.instructions = instrunctions;
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     @Override

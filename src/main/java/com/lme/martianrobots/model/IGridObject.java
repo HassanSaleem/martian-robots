@@ -8,7 +8,7 @@ public interface IGridObject {
     void setGridPosition(GridObjectPosition position);
 
     String getInstructions();
-    void setInstrunctions(String instrunctions);
+    void setInstructions(String instructions);
 
     UUID getUuid();
 }
