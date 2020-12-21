@@ -15,6 +15,7 @@ public class GridObjectPosition {
         this.startCoordinates = coordinates;
         this.orientation = orientation;
     }
+
     public Coordinates getStartCoordinates() {
         return startCoordinates;
     }
@@ -66,9 +67,8 @@ public class GridObjectPosition {
 
     public void move(Coordinates coordinates) {
 
-        if (this.isLost){
+        if (this.isLost && this.lastKnownCoordiantes==null){
             this.lastKnownCoordiantes = new Coordinates(endCoordinates.getxPosition(),endCoordinates.getyPosition());
-            return;
         }
 
         this.endCoordinates.setyPosition(coordinates.getyPosition());

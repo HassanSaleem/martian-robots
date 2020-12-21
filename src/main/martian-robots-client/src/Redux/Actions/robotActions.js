@@ -1,3 +1,11 @@
+const updateCoordinates = (coordinates) =>
+{
+    return {
+        type: "UPDATE_COORDINATES",
+        coordinates: coordinates
+    }
+}
+
 const addRobot = () =>
 {
     return {
@@ -27,15 +35,8 @@ const submitRobots = (robots) =>
         payload: {
             request :{
                 method: 'POST',
-                url:"/grid/submit",
-                data: {
-                    Coordinates:{
-
-                    },
-                    Robots: {
-                        
-                    }
-                }
+                url:"grid/create-grid",
+                data: robots
             }
         }
     }
@@ -43,4 +44,4 @@ const submitRobots = (robots) =>
 
 
 
-export {addRobot, updateRobot, resetRobots}
+export {addRobot, updateRobot, resetRobots, submitRobots, updateCoordinates}

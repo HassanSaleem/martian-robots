@@ -1,9 +1,6 @@
 package com.lme.martianrobots.services;
 
-import com.lme.martianrobots.model.Coordinates;
-import com.lme.martianrobots.model.GridObjectPosition;
-import com.lme.martianrobots.model.IGridObject;
-import com.lme.martianrobots.model.Orientation;
+import com.lme.martianrobots.model.*;
 import com.lme.martianrobots.utility.DirectionMap;
 import org.springframework.stereotype.Service;
 
@@ -15,23 +12,24 @@ import static java.lang.StrictMath.sqrt;
 @Service
 public class GridService {
 
-    Map<Coordinates, IGridObject> grid = new HashMap();
+    Map<Coordinates, Robot> grid = new HashMap();
 
 
-    public void createGridWithRobots(Coordinates upperRightCoordinate, List<IGridObject> gridObjects){
+    public List<Robot> createGridWithRobots(Coordinates upperRightCoordinate, List<Robot> gridObjects){
         createGrid(upperRightCoordinate);
         addGridObjectsToGrid(upperRightCoordinate, gridObjects);
+        return getGridObjects();
     }
 
-    private void addGridObjectsToGrid(Coordinates upperRightCoordinate, List<IGridObject> gridObjects){
+    private void addGridObjectsToGrid(Coordinates upperRightCoordinate, List<Robot> gridObjects){
         int gridSize = (int) sqrt(grid.size());
-        for (IGridObject gridObj:gridObjects
+        for (Robot gridObj:gridObjects
              ) {
 
             List<Coordinates> lostObjects = grid.entrySet().stream().map(Map.Entry::getValue)
                                                 .filter(obj -> obj != null)
                                                 .filter(obj -> obj.getGridPosition().getIsLost())
-                                                .map(IGridObject::getGridPosition)
+                                                .map(Robot::getGridPosition)
                                                 .map(GridObjectPosition::getLastKnownCoordiantes)
                                                 .collect(Collectors.toList());
 
@@ -40,7 +38,7 @@ public class GridService {
 
             //now move to new position on grid
             Coordinates targetCoordinates = position.getIsLost() ? position.getLastKnownCoordiantes() : position.getEndCoordinates();
-            IGridObject targetObject = grid.get(targetCoordinates);
+            Robot targetObject = grid.get(targetCoordinates);
 
             if (targetObject == null){
                 grid.put(targetCoordinates, gridObj);
@@ -54,13 +52,13 @@ public class GridService {
         }
     }
 
-    public void executeInstruction(IGridObject gridObject, List<Coordinates> lostObjects, int xBoundary, int yBoundary) {
+    public void executeInstruction(Robot gridObject, List<Coordinates> lostObjects, int xBoundary, int yBoundary) {
         char[] steps = gridObject.getInstructions().toCharArray();
         for (char step:steps
         ) {
             if (gridObject.getGridPosition().getIsLost()) continue;
             Orientation orientation =  gridObject.getGridPosition().getOrientation();
-            AbstractMap.SimpleEntry<Coordinates,Orientation> translatedStep = DirectionMap.getDirectionMap().get(String.format("%s%s", orientation.toString(),step));
+            AbstractMap.SimpleEntry<Coordinates,Orientation> translatedStep = DirectionMap.getDirectionMap().get(String.format("%s%s", orientation.toString(),Character.toUpperCase(step)));
 
             Coordinates nxtCoordinates = gridObject.getGridPosition().getNextCoordinates(translatedStep.getKey());
             if ((nxtCoordinates.getxPosition() > xBoundary
@@ -90,12 +88,12 @@ public class GridService {
         }
     }
 
-    public Map<Coordinates, IGridObject> getGrid() {
+    public Map<Coordinates, Robot> getGrid() {
         return grid;
     }
 
-    public List<IGridObject> getGridObjects() {
-        List<IGridObject> gridObjects = grid.entrySet().stream().map(Map.Entry::getValue)
+    public List<Robot> getGridObjects() {
+        List<Robot> gridObjects = grid.entrySet().stream().map(Map.Entry::getValue)
                 .filter(obj -> obj != null)
                 .collect(Collectors.toList());
         return  gridObjects;

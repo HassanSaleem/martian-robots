@@ -32,7 +32,14 @@ public class MvcConfig implements ApplicationContextAware, WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/build/**").addResourceLocations("classpath:/build/");
         registry.addResourceHandler("/build/static/**").addResourceLocations("classpath:/build/static/");
+
+        registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
 
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -46,4 +53,5 @@ public class MvcConfig implements ApplicationContextAware, WebMvcConfigurer {
                 .allowedHeaders("*")
                 .allowedMethods("*");
     }
+
 }

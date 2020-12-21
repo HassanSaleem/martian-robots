@@ -24,15 +24,15 @@ public class GridServiceTest {
     public void createGridWithRobotsTest(){
 
         GridObjectPosition position = new GridObjectPosition(new Coordinates(1,1), Orientation.East);
-        IGridObject robot1 = new Robot(position,"RFRFRFRF");
+        Robot robot1 = new Robot(1, position,"RFRFRFRF");
 
         position = new GridObjectPosition(new Coordinates(3,2), Orientation.North);
-        IGridObject robot2 = new Robot(position,"FRRFLLFFRRFLL");
+        Robot robot2 = new Robot(2, position,"FRRFLLFFRRFLL");
 
         position = new GridObjectPosition(new Coordinates(0,3), Orientation.West);
-        IGridObject robot3 = new Robot(position,"LLFFFLFLFL");
+        Robot robot3 = new Robot(3, position,"LLFFFLFLFL");
 
-        List<IGridObject> gridObjects = new ArrayList<>();
+        List<Robot> gridObjects = new ArrayList<>();
         gridObjects.add(robot1);
         gridObjects.add(robot2);
         gridObjects.add(robot3);
@@ -40,11 +40,11 @@ public class GridServiceTest {
         gridService.getGridObjects();
         Assert.assertEquals((6*4), gridService.getGrid().size());
 
-        List<IGridObject> result = gridService.getGridObjects();
+        List<Robot> result = gridService.getGridObjects();
 
-        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid().equals(robot1.getUuid())).findAny().get().getGridPosition().toString());
-        Assert.assertEquals("3 3 N LOST", result.stream().filter(obj -> obj.getUuid().equals(robot2.getUuid())).findAny().get().getGridPosition().toString());
-        Assert.assertEquals("2 3 S", result.stream().filter(obj -> obj.getUuid().equals(robot3.getUuid())).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid() == robot1.getUuid()).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("3 3 N LOST", result.stream().filter(obj -> obj.getUuid() == robot2.getUuid()).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("2 3 S", result.stream().filter(obj -> obj.getUuid() == robot3.getUuid()).findAny().get().getGridPosition().toString());
 
     }
 

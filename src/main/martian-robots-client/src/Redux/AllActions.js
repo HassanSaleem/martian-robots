@@ -1,9 +1,11 @@
-import {addRobot, updateRobot, resetRobots} from './Actions/robotActions'
+import {addRobot, updateRobot, resetRobots, submitRobots, updateCoordinates} from './Actions/robotActions'
 
 const AllActions = {
     addRobot,
     updateRobot,
-    resetRobots
+    resetRobots,
+    submitRobots,
+    updateCoordinates
 }
 
 export default AllActions

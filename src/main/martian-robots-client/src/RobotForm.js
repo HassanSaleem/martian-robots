@@ -1,17 +1,54 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Form, Col, Button} from 'react-bootstrap'
 import {useSelector, useDispatch} from 'react-redux'
 import AllActions from './Redux/AllActions'
 
 const RobotForm = () => {
 
-    var robots = useSelector(state => state.robots)
-
-    
+    var robots = useSelector(state => state.robots.robots)
+    var coordinates = useSelector(state => state.robots.coordinates)
     const dispatch = useDispatch()
+
+    const onCoordinateChange = (coordinate,event) => {
+        if (coordinate === "X"){
+            dispatch(AllActions.updateCoordinates({...coordinates, xPosition: event.target.value}))
+        }
+        else{
+            dispatch(AllActions.updateCoordinates({...coordinates, yPosition: event.target.value}))
+        }
+    }
 
     const updateRobot = (robot) => {
         dispatch(AllActions.updateRobot(robot))
+    }
+
+    const submitRobots = (coordinates,robots) => {
+        console.log(robots)
+        var requestRobots = robots.map(obj => createRobotRequest(obj))
+        var requestBody = {
+            "coordinates": coordinates,
+            "robots": requestRobots
+        }
+
+        dispatch(AllActions.submitRobots(requestBody))
+
+    }
+
+    const createRobotRequest = (robot) => {
+        return {
+            "gridPosition": {
+              "endCoordinates": null,
+              "isLost": false,
+              "lastKnownCoordiantes": null,
+              "orientation": robot.orientation,
+              "startCoordinates": {
+                "xPosition": robot.xCoordinate,
+                "yPosition": robot.yCoordinate
+              }
+            },
+            "instructions": robot.instructions,
+            "uuid": robot.id
+          }
     }
     
     return (
@@ -23,16 +60,16 @@ const RobotForm = () => {
             </Form.Row>
             <Form.Row>
                 <Col xs="auto">
-                <Form.Control type="number" placeholder="X" />
+                <Form.Control type="number" placeholder="X" onChange={(event)=> onCoordinateChange("X", event)} value={coordinates.xPosition}/>
                 </Col>
                 <Col xs="auto">
-                <Form.Control type="number" placeholder="Y" />
+                <Form.Control type="number" placeholder="Y" onChange={(event)=> onCoordinateChange("Y", event)} value={coordinates.yPosition}/>
                 </Col>
                 <Col xs="auto">
                 <Button onClick={() => dispatch(AllActions.resetRobots())}>Reset</Button>
                 </Col>
                 <Col xs="auto">
-                <Button>Submit</Button>
+                <Button onClick={() => submitRobots(coordinates,robots)}>Submit</Button>
                 </Col>
             </Form.Row>
             </Form.Group>
