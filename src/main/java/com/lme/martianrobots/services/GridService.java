@@ -12,10 +12,11 @@ import static java.lang.StrictMath.sqrt;
 @Service
 public class GridService {
 
-    Map<Coordinates, Robot> grid = new HashMap();
+    Map<Coordinates, Robot> grid;
 
 
     public List<Robot> createGridWithRobots(Coordinates upperRightCoordinate, List<Robot> gridObjects){
+        grid = new HashMap<>();
         createGrid(upperRightCoordinate);
         addGridObjectsToGrid(upperRightCoordinate, gridObjects);
         return getGridObjects();
