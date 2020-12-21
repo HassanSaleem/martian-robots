@@ -93,7 +93,7 @@ const RobotForm = () => {
                         <Form.Control as="select" placeholder="Orientation" value={robot.orientation} onChange={(event)=> updateRobot({...robot, orientation: event.target.value})}>
                             <option value="North">North</option>
                             <option value="East">East</option>
-                            <option value="Sout">South</option>
+                            <option value="South">South</option>
                             <option value="West">West</option>
                         </Form.Control>
                         </Col>
