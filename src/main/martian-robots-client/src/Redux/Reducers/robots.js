@@ -9,7 +9,7 @@ const robots = (state = {loading: false, coordinates:initialCoordinates, robots:
                 id: state.robots.length +1,
                 xCoordinate: "",
                 yCoordinate: "",
-                orientation: "",
+                orientation: "North",
                 instructions: ""
             }
             const addedRobots = [...state.robots, newRobot]
