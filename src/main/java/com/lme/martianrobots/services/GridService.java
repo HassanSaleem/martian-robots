@@ -33,6 +33,13 @@ public class GridService {
                                                 .map(GridObjectPosition::getLastKnownCoordiantes)
                                                 .collect(Collectors.toList());
 
+            if (gridObj.getGridPosition().getStartCoordinates().getxPosition() > upperRightCoordinate.getxPosition()
+                    || gridObj.getGridPosition().getStartCoordinates().getyPosition()> upperRightCoordinate.getyPosition()
+                    || gridObj.getGridPosition().getStartCoordinates().getxPosition() < 0
+                    || gridObj.getGridPosition().getStartCoordinates().getxPosition() < 0){
+                continue;
+            }
+
             executeInstruction(gridObj, lostObjects, upperRightCoordinate.getxPosition(), upperRightCoordinate.getyPosition());
             GridObjectPosition position = gridObj.getGridPosition();
 
