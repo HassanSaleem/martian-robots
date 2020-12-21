@@ -1,6 +1,6 @@
 
 
-const robots = (state = {loading: false, coordinates:initialCoordinates, robots:initialRobot, gridRobots:testResult}, action) => {
+const robots = (state = {loading: false, coordinates:initialCoordinates, robots:initialRobot, gridRobots:[]}, action) => {
     switch(action.type){
         case "UPDATE_COORDINATES":
             return {...state, coordinates:action.coordinates}
@@ -22,8 +22,7 @@ const robots = (state = {loading: false, coordinates:initialCoordinates, robots:
         case "SUBMIT_ROBOTS_GET":
             return {...state, loading:true};
         case "SUBMIT_ROBOTS_SUCCESS":
-            //return {...state, loading:false, gridRobots:action.payload.data};
-            return {...state, loading:false, gridRobots:testResult};
+            return {...state, loading:false, gridRobots:action.payload.data};
         case "SUBMIT_ROBOTS_FAIL":
             console.log(action)
             return {...state, loading:false, gridRobots:[]};         
@@ -33,7 +32,6 @@ const robots = (state = {loading: false, coordinates:initialCoordinates, robots:
 }
 
 const updateRobot = (state,updatedRobot) => {
-    console.log(updatedRobot)
     const newState = state.map((obj => obj.id === updatedRobot.id
         ? updatedRobot : obj));
        
@@ -45,7 +43,7 @@ const initialRobot = [
         id: 1,
         xCoordinate: "",
         yCoordinate: "",
-        orientation: "",
+        orientation: "North",
         instructions: ""
     }
 ]
@@ -68,7 +66,8 @@ const testResult = [
         },
         "lastKnownCoordiantes": null,
         "orientation": "East",
-        "isLost": false
+        "isLost": false,
+        "stringFormat": "1 1 E"
       },
       "instructions": "RFRFRFRF",
       "uuid": 1
@@ -81,14 +80,15 @@ const testResult = [
         },
         "endCoordinates": {
           "xPosition": 3,
-          "yPosition": 3
+          "yPosition": 4
         },
         "lastKnownCoordiantes": {
           "xPosition": 3,
           "yPosition": 3
         },
         "orientation": "North",
-        "isLost": true
+        "isLost": true,
+        "stringFormat": "3 3 N LOST"
       },
       "instructions": "FRRFLLFFRRFLL",
       "uuid": 2
@@ -105,7 +105,8 @@ const testResult = [
         },
         "lastKnownCoordiantes": null,
         "orientation": "South",
-        "isLost": false
+        "isLost": false,
+        "stringFormat": "2 3 S"
       },
       "instructions": "LLFFFLFLFL",
       "uuid": 3

@@ -7,6 +7,7 @@ public class GridObjectPosition {
     private Coordinates lastKnownCoordiantes;
     private Orientation orientation;
     private Boolean isLost = false;
+    private String stringFormat = "";
 
     public GridObjectPosition(){
     }
@@ -75,8 +76,7 @@ public class GridObjectPosition {
         this.endCoordinates.setxPosition(coordinates.getxPosition());
     }
 
-    @Override
-    public String toString() {
+    public String getStringFormat() {
         if (this.startCoordinates == null && this.endCoordinates == null && this.lastKnownCoordiantes == null){
             return "";
         }
@@ -84,7 +84,10 @@ public class GridObjectPosition {
         if (this.endCoordinates == null && this.lastKnownCoordiantes == null){
             return String.format("%s %s %s", this.startCoordinates.getxPosition(), this.startCoordinates.getyPosition(), this.orientation);
         }
-        return this.isLost ? String.format("%s %s %s LOST", this.lastKnownCoordiantes.getxPosition(), this.lastKnownCoordiantes.getyPosition(), this.orientation) :
+        this.stringFormat = this.isLost ? String.format("%s %s %s LOST", this.lastKnownCoordiantes.getxPosition(), this.lastKnownCoordiantes.getyPosition(), this.orientation) :
                 String.format("%s %s %s", this.getEndCoordinates().getxPosition(), this.getEndCoordinates().getyPosition(), this.orientation);
+        return stringFormat;
     }
+
+
 }

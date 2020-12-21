@@ -6,12 +6,22 @@ function PlanetGrid(){
     var coordinates = useSelector(state => state.robots.coordinates)
     var gridRobots = useSelector(state => state.robots.gridRobots)
     return (
-        <div style={{margin: "auto", backgroundColor:"#9D0000", height:coordinates.yPosition * 100, width:coordinates.xPosition * 100}}>
+        <div style={{margin: "auto", backgroundColor:"#9D0000", height:(coordinates.yPosition * 110) + "px", width:(coordinates.xPosition * 110) + "px"}}>
             {gridRobots.map((obj) => {
-                console.log(obj)
+                var gridPosition = {
+                    xPosition: obj.gridPosition.endCoordinates.xPosition,
+                    yPosition: obj.gridPosition.endCoordinates.yPosition
+                }
+                if (obj.gridPosition.isLost){
+                    gridPosition = {
+                        xPosition: obj.gridPosition.lastKnownCoordiantes.xPosition,
+                        yPosition: obj.gridPosition.lastKnownCoordiantes.yPosition
+                    }
+                }
                 return(
-                <div style={{height: "40px", width:"40px",position:"relative", left:obj.gridPosition.endCoordinates.xPosition*100 + "px", top:(coordinates.yPosition * 100 - obj.gridPosition.endCoordinates.yPosition*100) + "px"}}>
+                <div style={{height: "50px", width:"50px",position:"relative", left:gridPosition.xPosition*100 + "px", top:(coordinates.yPosition * 100 - gridPosition.yPosition*100) + "px"}}>
                     <RobotLogo />
+                        <div style={{textAlign: "center"}}>{obj.gridPosition.stringFormat}</div>
                     </div>)
                 })}
         </div>

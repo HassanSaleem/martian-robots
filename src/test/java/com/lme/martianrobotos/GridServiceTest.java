@@ -42,15 +42,25 @@ public class GridServiceTest {
 
         List<Robot> result = gridService.getGridObjects();
 
-        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid() == robot1.getUuid()).findAny().get().getGridPosition().toString());
-        Assert.assertEquals("3 3 N LOST", result.stream().filter(obj -> obj.getUuid() == robot2.getUuid()).findAny().get().getGridPosition().toString());
-        Assert.assertEquals("2 3 S", result.stream().filter(obj -> obj.getUuid() == robot3.getUuid()).findAny().get().getGridPosition().toString());
+        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid() == robot1.getUuid()).findAny().get().getGridPosition().getStringFormat());
+        Assert.assertEquals("3 3 N LOST", result.stream().filter(obj -> obj.getUuid() == robot2.getUuid()).findAny().get().getGridPosition().getStringFormat());
+        Assert.assertEquals("2 3 S", result.stream().filter(obj -> obj.getUuid() == robot3.getUuid()).findAny().get().getGridPosition().getStringFormat());
 
     }
 
     @Test
-    public void updateRobotOnGridTest(){
+    public void invalidInstructionTest(){
+        GridObjectPosition position = new GridObjectPosition(new Coordinates(1,1), Orientation.East);
+        Robot robot1 = new Robot(1, position,"I");
 
+        List<Robot> gridObjects = new ArrayList<>();
+        gridObjects.add(robot1);
+        gridService.createGridWithRobots(new Coordinates(5,3), gridObjects);
+        gridService.getGridObjects();
+
+        List<Robot> result = gridService.getGridObjects();
+
+        Assert.assertEquals("1 1 E", result.stream().filter(obj -> obj.getUuid() == robot1.getUuid()).findAny().get().getGridPosition().getStringFormat());
     }
 
     @Test

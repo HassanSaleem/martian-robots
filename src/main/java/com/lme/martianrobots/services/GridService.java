@@ -59,7 +59,7 @@ public class GridService {
             if (gridObject.getGridPosition().getIsLost()) continue;
             Orientation orientation =  gridObject.getGridPosition().getOrientation();
             AbstractMap.SimpleEntry<Coordinates,Orientation> translatedStep = DirectionMap.getDirectionMap().get(String.format("%s%s", orientation.toString(),Character.toUpperCase(step)));
-
+            if (translatedStep == null){continue;}
             Coordinates nxtCoordinates = gridObject.getGridPosition().getNextCoordinates(translatedStep.getKey());
             if ((nxtCoordinates.getxPosition() > xBoundary
                     || nxtCoordinates.getyPosition()> yBoundary)

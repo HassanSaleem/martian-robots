@@ -19,17 +19,18 @@ const RobotForm = () => {
     }
 
     const updateRobot = (robot) => {
+        console.log(robot)
         dispatch(AllActions.updateRobot(robot))
     }
 
     const submitRobots = (coordinates,robots) => {
-        console.log(robots)
+        
         var requestRobots = robots.map(obj => createRobotRequest(obj))
+        
         var requestBody = {
             "coordinates": coordinates,
             "robots": requestRobots
         }
-
         dispatch(AllActions.submitRobots(requestBody))
 
     }
@@ -44,7 +45,8 @@ const RobotForm = () => {
               "startCoordinates": {
                 "xPosition": robot.xCoordinate,
                 "yPosition": robot.yCoordinate
-              }
+              },
+              "stringFormat": ""
             },
             "instructions": robot.instructions,
             "uuid": robot.id
@@ -87,7 +89,12 @@ const RobotForm = () => {
                         <Form.Control type="number" placeholder="Y"  value={robot.yCoordinate} onChange={(event)=> updateRobot({...robot, yCoordinate: event.target.value})}/>
                         </Col>
                         <Col xs="auto">
-                        <Form.Control type="text" placeholder="Orientation" value={robot.orientation} onChange={(event)=> updateRobot({...robot, orientation: event.target.value})}/>
+                        <Form.Control as="select" placeholder="Orientation" value={robot.orientation} onChange={(event)=> updateRobot({...robot, orientation: event.target.value})}>
+                            <option value="North">North</option>
+                            <option value="East">East</option>
+                            <option value="South">South</option>
+                            <option value="West">West</option>
+                        </Form.Control>
                         </Col>
                         <Col xs="auto">
                         <Form.Control type="text" placeholder="Instructions" value={robot.instructions} onChange={(event)=> updateRobot({...robot, instructions: event.target.value})}/>
