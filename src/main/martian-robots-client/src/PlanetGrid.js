@@ -5,8 +5,9 @@ import {ReactComponent as RobotLogo} from './SVG/Robot.svg';
 function PlanetGrid(){
     var coordinates = useSelector(state => state.robots.coordinates)
     var gridRobots = useSelector(state => state.robots.gridRobots)
+    console.log(coordinates)
     return (
-        <div style={{margin: "auto", backgroundColor:"#9D0000", height:(coordinates.yPosition * 110) + "px", width:(coordinates.xPosition * 110) + "px"}}>
+        <div style={{margin: "auto", backgroundColor:"#9D0000", height:(coordinates.yPosition * 100) + "px", width:(coordinates.xPosition *100) + "px"}}>
             {gridRobots.map((obj) => {
                 var gridPosition = {
                     xPosition: obj.gridPosition.endCoordinates.xPosition,

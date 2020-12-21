@@ -14,6 +14,7 @@ public class GridObjectPosition {
 
     public GridObjectPosition(Coordinates coordinates, Orientation orientation) {
         this.startCoordinates = coordinates;
+        this.endCoordinates = this.startCoordinates;
         this.orientation = orientation;
     }
 
@@ -42,6 +43,9 @@ public class GridObjectPosition {
     }
 
     public Coordinates getEndCoordinates() {
+        if (endCoordinates == null){
+            return startCoordinates;
+        }
         return endCoordinates;
     }
 
